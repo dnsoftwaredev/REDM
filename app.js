@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const path = require('path');
 const Property = require('./models/property');
@@ -8,6 +9,7 @@ mongoose.connect('mongodb://localhost:27017/redm', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
 });
 
 const db = mongoose.connection;
@@ -20,6 +22,7 @@ db.once('open', () => {
 
 
 app.set('views', path.join(__dirname, 'views'))
+app.engine('ejs', ejsMate); // template engine
 app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
