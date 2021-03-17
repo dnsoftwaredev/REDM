@@ -6,6 +6,7 @@ const path = require('path');
 const catchAsync = require('./utils/catchAsync');
 const EError = require('./utils/EError');
 const Property = require('./models/property');
+const {propertySchema} = require('./schemas.js');
 
 mongoose.connect('mongodb://localhost:27017/redm', {
     useNewUrlParser: true,
@@ -30,6 +31,16 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+const validateProperty = (req, res, next) => {
+    const {error} = propertySchema.validate(req.body);
+    if(error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new EError(msg, 400)
+    } else {
+        next();
+    }
+}
+
 app.get('/', (req, res) => {
     res.render('home');
 });
@@ -43,7 +54,7 @@ app.get('/properties/new', async (req, res) => {
     res.render('properties/new');
 });
 
-app.post('/properties', catchAsync(async (req, res) => {
+app.post('/properties', validateProperty, catchAsync(async (req, res) => {
     const property = new Property(req.body.property);
     await property.save();
     res.redirect(`/properties/${property._id}`)
@@ -59,7 +70,7 @@ app.get('/properties/:id/edit', catchAsync(async (req, res) => {
     res.render('properties/edit', { property });
 }));
 
-app.put('/properties/:id', catchAsync(async (req, res) => {
+app.put('/properties/:id', validateProperty, catchAsync(async (req, res) => {
     const property = await Property.findByIdAndUpdate(req.params.id, {...req.body.property});
     res.redirect(`/properties/${property._id}`);
 }));
