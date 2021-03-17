@@ -1,25 +1,64 @@
 <% layout('layouts/boilerplate') %>
-<div class="row">
-    <div class="col-6 offset-3">
-        <div class="card mc-3">
-            <img src="<%=property.image%>" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title"><%= property.title %></h5>
-                <p class="card-text"><%= property.description %></p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item text-muted"><%= property.location %></li>
-                <li class="list-group-item">$<%= property.price %></li>
-            </ul>
-            <div class="card-body">
-                <a href="/properties/<%=property._id%>/edit" class="card-link btn btn-info">Edit</a>
-                <form action="/properties/<%=property._id%>?_method=DELETE" class="d-inline" method="POST">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-            <div class="card-footer text-muted">
-                3 days ago
+    <div class="row">
+        <div class="col-6">
+            <div class="card mc-3">
+                <img src="<%= property.image %>" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= property.title %>
+                    </h5>
+                    <p class="card-text">
+                        <%= property.description %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-muted">
+                        <%= property.location %>
+                    </li>
+                    <li class="list-group-item">$<%= property.price %>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a href="/properties/<%=property._id%>/edit" class="card-link btn btn-info">Edit</a>
+                    <form action="/properties/<%=property._id%>?_method=DELETE" class="d-inline" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    3 days ago
+                </div>
             </div>
         </div>
+
+        <div class="col-6">
+            <h2>Leave your analysis for this deal:</h2>
+            <form action="/properties/<%=property._id%>/helps" method="POST" class="mb-3 need-validated" novalidate>
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Rating</label>
+                    <input class="form-range" type="range" min="1" max="5" name="help[rating]" id="rating">
+                </div>
+                <div class="mb-3">
+                    <label for="body" class="form-label">Comment</label>
+                    <textarea class="form-control" name="help[body]" id="body" cols="30" rows="10" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <button class="btn btn-success">Submit</button>
+            </form>
+            <% for (let help of property.helps) {%>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Rating: <%= help.rating %>
+                        </h5>
+                        <p class="card-text">Comment: <%= help.body %>
+                        </p>
+                        <form action="/properties/<%=property._id%>/helps/<%=help._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                <% } %>
+        </div>
     </div>
-</div>
+    </div>

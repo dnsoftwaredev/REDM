@@ -24,9 +24,7 @@
     <script>
         (function () {
             'use strict'
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
             const requiredValidations = document.querySelectorAll('.need-validated')
-            // Loop over them and prevent submission
             Array.from(requiredValidations)
                 .forEach(function (requiredValidation) {
                     requiredValidation.addEventListener('submit', function (event) {

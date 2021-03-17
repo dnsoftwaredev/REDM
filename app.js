@@ -6,7 +6,8 @@ const path = require('path');
 const catchAsync = require('./utils/catchAsync');
 const EError = require('./utils/EError');
 const Property = require('./models/property');
-const {propertySchema} = require('./schemas.js');
+const Help = require('./models/help');
+const {propertySchema, helpSchema} = require('./schemas.js');
 
 mongoose.connect('mongodb://localhost:27017/redm', {
     useNewUrlParser: true,
@@ -41,6 +42,16 @@ const validateProperty = (req, res, next) => {
     }
 }
 
+const validateHelp = (req, res, next) => {
+    const {error} = helpSchema.validate(req.body);
+    if(error) {
+        const msg = error.detailts.map(el => el.message).join(',')
+        throw new EError(msg, 400)
+    } else {
+        next();
+    }
+}
+
 app.get('/', (req, res) => {
     res.render('home');
 });
@@ -61,7 +72,7 @@ app.post('/properties', validateProperty, catchAsync(async (req, res) => {
 }));
 
 app.get('/properties/:id', catchAsync(async (req, res) => {
-    const property = await Property.findById(req.params.id);
+    const property = await Property.findById(req.params.id).populate('helps');
     res.render('properties/show', { property });
 }));
 
@@ -79,6 +90,22 @@ app.delete('/properties/:id', catchAsync(async (req, res) => {
     await Property.findByIdAndDelete(req.params.id);
     res.redirect('/properties');
 }));
+
+app.post('/properties/:id/helps', validateHelp, catchAsync(async (req, res) => {
+    const property = await Property.findById(req.params.id);
+    const help = new Help(req.body.help);
+    property.helps.push(help);
+    await help.save();
+    await property.save();
+    res.redirect(`/properties/${property._id}`);
+}))
+
+app.delete('/properties/:id/helps/:helpId', catchAsync(async (req, res) => {
+    const {id, helpId} = req.params;
+    await Property.findByIdAndUpdate(id, {$pull: {helps: helpId}});
+    await Help.findByIdAndDelete(helpId);
+    res.redirect(`/properties/${id}`);
+}))
 
 app.all('*', (req, res, next) => {
     next(new EError('Page Not Found', 404));
