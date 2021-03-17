@@ -20,6 +20,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
         crossorigin="anonymous"></script>
+
+    <script>
+        (function () {
+            'use strict'
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const requiredValidations = document.querySelectorAll('.need-validated')
+            // Loop over them and prevent submission
+            Array.from(requiredValidations)
+                .forEach(function (requiredValidation) {
+                    requiredValidation.addEventListener('submit', function (event) {
+                        if (!requiredValidation.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        requiredValidation.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
 </body>
 
 </html>
