@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Property</title>
+</head>
+<body>
+    <h1>Edit Property</h1>
+    <form action="/properties/<%=property._id%>?_method=PUT" method="POST">
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="property[title]" value="<%= property.title %>">
+        </div>
+        <div>
+            <label for="Location">Location</label>
+            <input type="text" id="location" name="property[location]" value="<%= property.location%>">
+        </div>
+        <button>Update A Property</button>
+    </form>
+    <a href="/properties">All Properties</a>
+</body>
+</html>
