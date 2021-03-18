@@ -5,18 +5,17 @@ const Property = require('../models/property');
 const catchAsync = require('../utils/catchAsync')
 const {isLoggedIn, isAuthor, validateProperty} = require('../middleware');
 
-router.get('/', catchAsync(properties.index));
+router.route('/')
+    .get(catchAsync(properties.index))
+    .post(isLoggedIn, validateProperty, catchAsync(properties.createProperty))
 
 router.get('/new', isLoggedIn, properties.newForm);
 
-router.post('/', isLoggedIn, validateProperty, catchAsync(properties.createProperty));
-
-router.get('/:id', catchAsync(properties.showProperty));
+router.route('/:id')
+    .get(catchAsync(properties.showProperty))
+    .put(isLoggedIn, isAuthor, validateProperty, catchAsync(properties.updateProperty))
+    .delete(isLoggedIn, isAuthor, catchAsync(properties.deleteProperty))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(properties.editForm));
-
-router.put('/:id', isLoggedIn, isAuthor, validateProperty, catchAsync(properties.updateProperty));
-
-router.delete('/:id',isLoggedIn, isAuthor, catchAsync(properties.deleteProperty));
 
 module.exports = router;
