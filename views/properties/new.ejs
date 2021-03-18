@@ -2,7 +2,7 @@
 <div class="row">
     <h1 class="text-center">New Property</h1>
     <div class="col-6 offset-3">
-        <form action="/properties" method="POST" novalidate class="need-validated">
+        <form action="/properties" method="POST" novalidate class="need-validated" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" name="property[title]" required>
@@ -17,13 +17,14 @@
             <div class="valid-feedback">
                 Looks good!
             </div>
-            <div class="mb-3">
+            <input type="file" name="image" id="" multiple>
+            <!-- <div class="mb-3">
                 <label for="image" class="form-label">Image Url</label>
                 <input type="text" class="form-control" id="image" name="property[image]" required>
             </div>
             <div class="valid-feedback">
                 Looks good!
-            </div>
+            </div> -->
             <div class="mb-3">
                 <label for="price" class="form-label">Property Price</label>
                 <div class="input-group">

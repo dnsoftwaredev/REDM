@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config(); // dotenv loads env var into process.env
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');

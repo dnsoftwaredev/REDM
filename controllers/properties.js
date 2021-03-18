@@ -11,6 +11,7 @@ module.exports.newForm = async (req, res) => {
 
 module.exports.createProperty = async (req, res) => {
     const property = new Property(req.body.property);
+    property.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     property.author = req.user._id;
     await property.save();
     req.flash('success', 'Successfully made a new Property');
@@ -24,7 +25,6 @@ module.exports.showProperty = async (req, res) => {
             path: 'author'
         }
     }).populate('author');
-    console.log(property);
     if (!property) {
         req.flash('error', 'Cannot find that Property');
         return res.redirect('/properties')
@@ -42,7 +42,7 @@ module.exports.editForm = async (req, res) => {
 }
 
 module.exports.updateProperty = async (req, res) => {
-    const property = await Property.findByIdAndUpdate(req.params.id, {...req.body.property});
+    const property = await Property.findByIdAndUpdate(req.params.id, { ...req.body.property });
     req.flash('success', 'Successfully updated the Property');
     res.redirect(`/properties/${property._id}`);
 }
