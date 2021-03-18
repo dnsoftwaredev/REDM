@@ -8,6 +8,10 @@ const PropertySchema = new Schema({
     price: Number,
     description: String,
     location: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     helps: [
         {
             type: Schema.Types.ObjectId,

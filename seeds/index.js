@@ -24,6 +24,7 @@ const seedDB = async () => {
         const rng = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 500000);
         const property = new Property({
+            author: '60537d37403060371c17bafd',
             location: `${city_list[rng].city}, ${city_list[rng].state}`,
             title: `${random_selector(descriptors)} ${random_selector(p_types)}`,
             image: 'https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1353&q=80',

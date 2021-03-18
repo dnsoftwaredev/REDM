@@ -15,15 +15,18 @@
                     <li class="list-group-item text-muted">
                         <%= property.location %>
                     </li>
+                    <li class="list-group-item">Submitted by <%= property.author.username %></li>
                     <li class="list-group-item">$<%= property.price %>
                     </li>
                 </ul>
+                <% if (currentUser && property.author.equals(currentUser._id)) {%> 
                 <div class="card-body">
                     <a href="/properties/<%=property._id%>/edit" class="card-link btn btn-info">Edit</a>
                     <form action="/properties/<%=property._id%>?_method=DELETE" class="d-inline" method="POST">
                         <button class="btn btn-danger">Delete</button>
                     </form>
                 </div>
+                <% } %> 
                 <div class="card-footer text-muted">
                     3 days ago
                 </div>
@@ -31,6 +34,7 @@
         </div>
 
         <div class="col-6">
+            <% if(currentUser) {%> 
             <h2>Leave your analysis for this deal:</h2>
             <form action="/properties/<%=property._id%>/helps" method="POST" class="mb-3 need-validated" novalidate>
                 <div class="mb-3">
@@ -46,16 +50,20 @@
                 </div>
                 <button class="btn btn-success">Submit</button>
             </form>
+            <% } %> 
             <% for (let help of property.helps) {%>
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Rating: <%= help.rating %>
                         </h5>
+                        <h6 class="card-subtitle mb-2 text-muted">By <%= help.author.username %></h6>
                         <p class="card-text">Comment: <%= help.body %>
                         </p>
+                        <% if (currentUser && help.author.equals(currentUser._id)) {%> 
                         <form action="/properties/<%=property._id%>/helps/<%=help._id%>?_method=DELETE" method="POST">
                             <button class="btn btn-danger btn-sm">Delete</button>
                         </form>
+                        <% } %> 
                     </div>
                 </div>
                 <% } %>
