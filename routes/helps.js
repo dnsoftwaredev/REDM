@@ -23,6 +23,7 @@ router.post('/', validateHelp, catchAsync(async (req, res) => {
     property.helps.push(help);
     await help.save();
     await property.save();
+    req.flash('success', 'Created a new helpful comment');
     res.redirect(`/properties/${property._id}`);
 }));
 
@@ -30,6 +31,7 @@ router.delete('/:helpId', catchAsync(async (req, res) => {
     const {id, helpId} = req.params;
     await Property.findByIdAndUpdate(id, {$pull: {helps: helpId}});
     await Help.findByIdAndDelete(helpId);
+    req.flash('success', 'Successfully deleted an unhelpful comment');
     res.redirect(`/properties/${id}`);
 }));
 
