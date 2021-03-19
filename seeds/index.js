@@ -29,6 +29,10 @@ const seedDB = async () => {
             title: `${random_selector(descriptors)} ${random_selector(p_types)}`,
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis id inventore placeat odio dignissimos qui eligendi nobis fugiat, ea tempore soluta architecto. Unde esse delectus, porro placeat temporibus cumque incidunt. Excepturi reiciendis facilis cupiditate voluptatum possimus inventore, veniam explicabo ut doloribus, quibusdam harum cumque necessitatibus quas a odio repudiandae, tempora atque voluptatibus error in quis magnam quod! Omnis, illum eos.',
             price: price,
+            geometry: {
+                type: 'Point',
+                coordinates: [-98.4936, 29.4241]
+            },
             images: [
                 {
                     url: 'https://res.cloudinary.com/dhgvftizb/image/upload/v1616096555/REDM/photo-1570544820979-6eb25385944d_tcfrvf.jpg', 
