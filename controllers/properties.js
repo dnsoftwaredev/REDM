@@ -1,4 +1,5 @@
 const Property = require('../models/property');
+const { cloudinary } = require('../cloudinary');
 
 module.exports.index = async (req, res) => {
     const properties = await Property.find({});
@@ -46,6 +47,12 @@ module.exports.updateProperty = async (req, res) => {
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
     property.images.push(...imgs);
     await property.save();
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        await property.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
+    }
     req.flash('success', 'Successfully updated the Property');
     res.redirect(`/properties/${property._id}`);
 }
