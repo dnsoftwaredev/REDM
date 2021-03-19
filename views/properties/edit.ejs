@@ -1,50 +1,52 @@
-<% layout('layouts/boilerplate')%> 
-<div class="row">
-    <h1 class="text-center">Edit Property</h1>
-    <div class="col-6 offset-3">
-        <form action="/properties/<%=property._id%>?_method=PUT" method="POST" novalidate class="need-validated">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="property[title]" value="<%=property.title%>" required>
-            </div>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text" class="form-control" id="location" name="property[location]" value="<%=property.location%>" required>
-            </div>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="mb-3">
-                <label for="image" class="form-label">Image Url</label>
-                <input type="text" class="form-control" id="image" name="property[image]" value="<%=property.image%>" required>
-            </div>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="mb-3">
-                <label for="price" class="form-label">Property Price</label>
-                <div class="input-group">
-                    <span class="input-group-text" id="price-label">$</span>
-                    <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="property[price]" value="<%=property.price%>" required>
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Edit Property</h1>
+        <div class="col-6 offset-3">
+            <form action="/properties/<%=property._id%>?_method=PUT" method="POST" novalidate class="need-validated"
+                enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="property[title]"
+                        value="<%=property.title%>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
-                <div class="valid-feedback">
-                    Looks good!
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" name="property[location]"
+                        value="<%=property.location%>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="description">Description</label>
-                <textarea name="property[description]" id="description" type="text" class="form-control" required><%= property.description %></textarea>
-            </div>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="mb-3">
-                <button class="btn btn-info">Update Property</button>
-            </div>
-        </form>
-        <a href="/properties/<%=property._id%>">Back To Properties</a>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Add Images</label>
+                    <input type="file" name="image" id="image" multiple>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Property Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
+                            aria-describedby="price-label" name="property[price]" value="<%=property.price%>" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea name="property[description]" id="description" type="text" class="form-control"
+                        required><%= property.description %></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-info">Update Property</button>
+                </div>
+            </form>
+            <a href="/properties/<%=property._id%>">Back To Properties</a>
+        </div>
     </div>
-</div>

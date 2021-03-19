@@ -43,6 +43,9 @@ module.exports.editForm = async (req, res) => {
 
 module.exports.updateProperty = async (req, res) => {
     const property = await Property.findByIdAndUpdate(req.params.id, { ...req.body.property });
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    property.images.push(...imgs);
+    await property.save();
     req.flash('success', 'Successfully updated the Property');
     res.redirect(`/properties/${property._id}`);
 }

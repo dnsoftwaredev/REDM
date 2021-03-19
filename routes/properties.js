@@ -16,7 +16,7 @@ router.get('/new', isLoggedIn, properties.newForm);
 
 router.route('/:id')
     .get(catchAsync(properties.showProperty))
-    .put(isLoggedIn, isAuthor, validateProperty, catchAsync(properties.updateProperty))
+    .put(isLoggedIn, isAuthor, upload.array('image'), validateProperty, catchAsync(properties.updateProperty))
     .delete(isLoggedIn, isAuthor, catchAsync(properties.deleteProperty))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(properties.editForm));
