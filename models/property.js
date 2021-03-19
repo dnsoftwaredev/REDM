@@ -12,6 +12,8 @@ ImageSchema.virtual('thumbnail').get(function() {
 });
 // virtual object that will repalce the url so less data is consumed + cropped images
 
+const opts = { toJSON: {virtuals: true}} // mongoose set virtual props to true
+
 const PropertySchema = new Schema({
     title: String,
     images: [ImageSchema],
@@ -39,6 +41,13 @@ const PropertySchema = new Schema({
             ref: 'Help'
         }
     ]
+}, opts);
+
+PropertySchema.virtual('properties.popUpMarkup').get(function() {
+    return `
+    <strong><a href="/properties/${this._id}">${this.title}</a><strong>
+    <p>${this.description.substring(0, 20)}...</p>
+    `
 });
 
 PropertySchema.post('findOneAndDelete', async function(doc) {

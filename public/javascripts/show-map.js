@@ -6,11 +6,11 @@ const map = new mapboxgl.Map({
     zoom: 8
 });
 
-new mapboxg1.Marker()
+new mapboxgl.Marker()
     .setLngLat(property.geometry.coordinates)
     .setPopup(
-        new mapboxg1.Popup({offset: 25})
+        new mapboxgl.Popup({offset: 25})
             .setHTML(
-                `<h3>${property.title}</h3><p>$${property.price}</p>`
+                `<h4>${property.title}</h4><p>$${property.price}</p>`
             )
     ).addTo(map);

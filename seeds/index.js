@@ -20,7 +20,7 @@ const random_selector = array => array[Math.floor(Math.random() * array.length)]
 
 const seedDB = async () => {
     await Property.deleteMany({});
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 300; i++) {
         const rng = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 500000);
         const property = new Property({
@@ -31,7 +31,10 @@ const seedDB = async () => {
             price: price,
             geometry: {
                 type: 'Point',
-                coordinates: [-98.4936, 29.4241]
+                coordinates: [
+                    city_list[rng].longitude,
+                    city_list[rng].latitude,
+                ]
             },
             images: [
                 {

@@ -5,7 +5,7 @@ const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({accessToken: mapBoxToken})
 
 module.exports.index = async (req, res) => {
-    const properties = await Property.find({});
+    const properties = await Property.find({}).populate('popupText');
     res.render('properties/index', { properties });
 }
 
