@@ -15,12 +15,16 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
+const MongoDBStore = require('connect-mongo');
+
 
 const userRoutes = require('./routes/users')
 const propertyRoutes = require('./routes/properties');
 const helpRoutes = require('./routes/helps');
 
-mongoose.connect('mongodb://localhost:27017/redm', {
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/redm';
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -43,21 +47,29 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(mongoSanitize({
-    replaceWith: '_'
-}))
+app.use(mongoSanitize());
+
+const secret = process.env.SECRET || 'nosecret';
 
 const sessionConfig = {
     name: 'session',
-    secret: 'hehe',
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
         express: Date.now() + 1000 * 60 * 60 * 24,
         maxAge: 1000 * 60 * 60 * 24,
-    }
+    },
+    store: MongoDBStore.create({
+        mongoUrl: dbUrl,
+        touchAfter: 24 * 60 * 60
+    })
 }
+
+sessionConfig.store.on("error", function (e) {
+    console.log("Session store error", e)
+})
 
 app.use(session(sessionConfig));
 app.use(flash());
@@ -142,6 +154,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 });
 
-app.listen(3000, () => {
-    console.log('On Port 3000')
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+    console.log(`On Port ${port}`)
 });
