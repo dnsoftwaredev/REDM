@@ -17,7 +17,7 @@ module.exports.createProperty = async (req, res) => {
     const geoData = await geocoder.forwardGeocode({
         query: req.body.property.location,
         limit: 1
-    }).sned();
+    }).send();
     const property = new Property(req.body.property);
     property.geometry = geoData.body.features[0].geometry;
     property.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
