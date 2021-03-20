@@ -67,3 +67,13 @@ body {
 .green-font {
     color: rgba(46, 204, 64, 1);
 }
+
+.is-visible {
+    visibility: visible;
+}
+
+.is-hidden {
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+}

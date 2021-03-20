@@ -5,9 +5,9 @@ const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({accessToken: mapBoxToken})
 
 module.exports.index = async (req, res) => {
-    const properties = await Property.find({});
-    console.log(properties)
-    res.render('properties/index', { properties });
+    const properties = await Property.find().sort({'price': 1});
+    const sortedRevenue = await Property.find().sort({'revenue': 1})
+    res.render('properties/index', { properties, sortedRevenue });
 }
 
 module.exports.newForm = async (req, res) => {
