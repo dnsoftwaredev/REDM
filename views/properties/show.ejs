@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
     <div class="row mb-5">
-        <div class="col-6">
+        <div class="col-md-6">
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <% property.images.forEach((img, i)=> {%>
@@ -24,9 +24,9 @@
             </div>
             <div class="card mc-3">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h4 class="card-title">
                         <%= property.title %>
-                    </h5>
+                    </h4>
                     <p class="card-text">
                         <%= property.description %>
                     </p>
@@ -35,17 +35,33 @@
                     <li class="list-group-item text-muted">
                         <%= property.location %>
                     </li>
-                    <li class="list-group-item">Submitted by <%= property.author.username %>
+                    <li class="list-group-item">Submitted by <strong><%= property.author.username %></strong>
                     </li>
-                    <li class="list-group-item">$<%= property.price %>
+                    <li class="list-group-item">Purchase Price: $<%= property.price %>
                     </li>
+                    <li class="list-group-item">Property Revenue: $<%= property.revenue %>
+                    </li>
+                    <li class="list-group-item" id="capRate"> Cap Rate: <%= property.capRate50 %>%
+                    </li>
+                    
                 </ul>
                 <% if (currentUser && property.author.equals(currentUser._id)) {%>
                     <div class="card-body">
-                        <a href="/properties/<%=property._id%>/edit" class="card-link btn btn-info">Edit</a>
-                        <form action="/properties/<%=property._id%>?_method=DELETE" class="d-inline" method="POST">
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="d-grid">
+                                    <a href="/properties/<%=property._id%>/edit" class="card-link btn btn-dark">Edit</a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <form action="/properties/<%=property._id%>?_method=DELETE" class="d-inline"
+                                    method="POST">
+                                    <div class="d-grid">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <% } %>
                         <div class="card-footer text-muted">
@@ -54,51 +70,74 @@
             </div>
         </div>
 
-        <div class="col-6">
-            <div id="map" style="width: 100%; height: 300px;"></div>
+        <div class="col-md-6">
+            <div id="map" class="map mt-3 mt-md-0"></div>
             <% if(currentUser) {%>
-                <h2>Leave your analysis for this deal:</h2>
+                <h4 class="mt-4 mt-md-2">Leave your analysis for this deal:</h4>
                 <form action="/properties/<%=property._id%>/helps" method="POST" class="mb-3 need-validated" novalidate>
-                    <div class="mb-3">
-                        <label for="rating" class="form-label">Rating</label>
+                    <!-- <div class="mb-3">
+                        <label for="rating" class="form-label">Is this a good deal?</label>
                         <input class="form-range" type="range" min="1" max="5" name="help[rating]" id="rating">
-                    </div>
-                    <div class="mb-3">
-                        <label for="body" class="form-label">Comment</label>
+                    </div> -->
+                    <p>How good/bad is this deal?</p>
+                    <fieldset class="starability-checkmark mt-n2">
+                        <input type="radio" id="no-rate" class="input-no-rate" name="help[rating]" value="0" 
+                            aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="help[rating]" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="help[rating]" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="help[rating]" value="3" checked/>
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="help[rating]" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="help[rating]" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                    <div class="mb-3 mt-n3">
+                        <label for="body" class="form-label">Write your comment below:</label>
                         <textarea class="form-control" name="help[body]" id="body" cols="30" rows="10"
                             required></textarea>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
-                    <button class="btn btn-success">Submit</button>
+                    <div class="d-grid">
+                        <button class="btn btn-success">Submit</button>
+                    </div>
                 </form>
                 <% } %>
-                    <% for (let help of property.helps) {%>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Rating: <%= help.rating %>
-                                </h5>
-                                <h6 class="card-subtitle mb-2 text-muted">By <%= help.author.username %>
-                                </h6>
-                                <p class="card-text">Comment: <%= help.body %>
-                                </p>
-                                <% if (currentUser && help.author.equals(currentUser._id)) {%>
-                                    <form action="/properties/<%=property._id%>/helps/<%=help._id%>?_method=DELETE"
-                                        method="POST">
-                                        <button class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                    <% } %>
-                            </div>
-                        </div>
-                        <% } %>
         </div>
     </div>
+    <div class="row mt-n5 mt-md-0">
+        <div class="col">
+            <% if (property.helps.length) {%> 
+            <h2>Please see comments below:</h2>
+            <% } %> 
+            <% for (let help of property.helps) {%>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <p class="starability-result" data-rating="<%= help.rating %>"></p>
+                        <h6 class="card-subtitle mb-2 text-muted">By <%= help.author.username %>
+                        </h6>
+                        <p class="card-text">Comment: <%= help.body %>
+                        </p>
+                        <% if (currentUser && help.author.equals(currentUser._id)) {%>
+                            <form action="/properties/<%=property._id%>/helps/<%=help._id%>?_method=DELETE"
+                                method="POST">
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                            <% } %>
+                    </div>
+                </div>
+                <% } %>
+        </div>
     </div>
 
     <script>
         const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
-        const property = <%-JSON.stringify(property)%>
+        const property = <%- JSON.stringify(property) %>
     </script>
 
     <script src="/javascripts/show-map.js"></script>
+    <script src="/javascripts/calculations.js"></script>

@@ -23,12 +23,14 @@ const seedDB = async () => {
     for (let i = 0; i < 300; i++) {
         const rng = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 500000);
+        const revenue = Math.floor((Math.random() * 0.15) * price);
         const property = new Property({
             author: '60537d37403060371c17bafd',
             location: `${city_list[rng].city}, ${city_list[rng].state}`,
             title: `${random_selector(descriptors)} ${random_selector(p_types)}`,
-            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis id inventore placeat odio dignissimos qui eligendi nobis fugiat, ea tempore soluta architecto. Unde esse delectus, porro placeat temporibus cumque incidunt. Excepturi reiciendis facilis cupiditate voluptatum possimus inventore, veniam explicabo ut doloribus, quibusdam harum cumque necessitatibus quas a odio repudiandae, tempora atque voluptatibus error in quis magnam quod! Omnis, illum eos.',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis id inventore placeat odio dignissimos qui eligendi nobis fugiat, ea tempore soluta architecto. Unde esse delectus, porro placeat temporibus cumque incidunt. Excepturi reiciendis facilis cupiditate voluptatum possimus inventore',
             price: price,
+            revenue: revenue,
             geometry: {
                 type: 'Point',
                 coordinates: [

@@ -7,12 +7,15 @@ const ImageSchema = new Schema({
     filename: String,
 });
 
-ImageSchema.virtual('thumbnail').get(function() {
+ImageSchema.virtual('thumbnail').get(function () {
     return this.url.replace('/upload', '/upload/w_200');
 });
 // virtual object that will repalce the url so less data is consumed + cropped images
 
-const opts = { toJSON: {virtuals: true}} // mongoose set virtual props to true
+const opts = {
+    toJSON: { virtuals: true },
+    toObject: {virtuals: true},
+} // mongoose set virtual props to true
 
 const PropertySchema = new Schema({
     title: String,
@@ -29,6 +32,7 @@ const PropertySchema = new Schema({
         }
     },
     price: Number,
+    revenue: Number,
     description: String,
     location: String,
     author: {
@@ -43,14 +47,21 @@ const PropertySchema = new Schema({
     ]
 }, opts);
 
-PropertySchema.virtual('properties.popUpMarkup').get(function() {
+PropertySchema.virtual('properties.popUpMarkup').get(function () {
     return `
     <strong><a href="/properties/${this._id}">${this.title}</a><strong>
-    <p>${this.description.substring(0, 20)}...</p>
+    <p class="mb-0 light-font">$${this.price}</p>
+    <p class="mb-n2 light-font">${this.description.substring(0, 30)}...</p>
     `
 });
 
-PropertySchema.post('findOneAndDelete', async function(doc) {
+// cap rate calculated with 50% rule
+PropertySchema.virtual('capRate50').get(function () {
+    const capRate = Number.parseFloat(this.revenue / this.price * 100 / 2).toPrecision(3);
+    return capRate;
+});
+
+PropertySchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
         await Help.deleteMany({
             _id: {

@@ -31,9 +31,20 @@
                         Looks good!
                     </div>
                 </div>
+                <div class="mb-3">
+                    <label for="revenue" class="form-label">Property Revenue</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="revenue-label">$</span>
+                        <input type="text" class="form-control" id="revenue" placeholder="0.00" aria-label="revenue"
+                            aria-describedby="revenue-label" name="property[revenue]" value="<%=property.revenue%>" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
                 <div>
                     <label class="form-label" for="description">Description</label>
-                    <textarea name="property[description]" id="description" type="text" class="form-control"
+                    <textarea name="property[description]" id="description" type="text" class="form-control" cols="20" rows="6"
                         required><%= property.description %></textarea>
                     <div class="valid-feedback">
                         Looks good!
@@ -50,21 +61,20 @@
                     <% property.images.forEach(function(img, i) { %>
                         <div class="col-4">
                             <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="">
-                            <div class="form-check-inline">
-                                <input type="checkbox" id="image-<%=i%>" name="deleteImages[]"
-                                    value="<%=img.filename%>">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
+                                <label for="image-<%=i%>">Delete?</label>
                             </div>
-                            <label for="image-<%=i%>">Delete?</label>
                         </div>
                         <% })%>
                     </div>
                 </div>
                 <div class="mb-3 float-start">
-                    <button class="btn btn-info">Update Property</button>
+                    <button class="btn btn-success">Update Property</button>
                 </div>
             </form>
             <div class="mb-3 float-end">
-                <a href="/properties" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                <a href="/properties" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                         height="16" fill="currentColor" class="bi bi-arrow-90deg-up mb-1" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z" />

@@ -1,0 +1,69 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+.mt-n1 {
+    margin-top: -0.25rem;
+}
+
+.mt-n2 {
+    margin-top: -0.5rem;
+}
+
+.mt-n3 {
+    margin-top: -0.75rem;
+}
+
+.mt-n4 {
+    margin-top: -1rem;
+}
+
+.mt-n5 {
+    margin-top: -1.5rem;
+}
+
+.mb-n1 {
+    margin-bottom: -0.25rem;
+}
+
+.mb-n2 {
+    margin-bottom: -0.5rem;
+}
+
+.mb-n3 {
+    margin-bottom: -0.75rem;
+}
+
+.mb-n4 {
+    margin-bottom: -1rem;
+}
+
+.mb-n5 {
+    margin-bottom: -1.5rem;
+}
+
+.light-font {
+    font-weight: 300;
+}
+
+.map {
+    width: 100%; 
+    height: 300px;
+}
+
+.red-font {
+    color: rgba(255, 65, 54, 0.9);
+}
+
+.yellow-font {
+    color: rgb(255, 230, 0);
+}
+
+.green-font {
+    color: rgba(46, 204, 64, 1);
+}

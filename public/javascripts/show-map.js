@@ -11,6 +11,7 @@ new mapboxgl.Marker()
     .setPopup(
         new mapboxgl.Popup({offset: 25})
             .setHTML(
-                `<h4>${property.title}</h4><p>$${property.price}</p>`
+                `<strong>${property.title}<strong>
+                <p class="mb-0 light-font">$${property.price}</p>`
             )
     ).addTo(map);
