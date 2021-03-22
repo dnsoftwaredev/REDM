@@ -4,12 +4,16 @@
         <div class="row mb-4">
             <div class="col col-md-6">
                 <div class="d-grid">
-                    <button type="button" class="btn btn-info btn-block" id="sortPP">Sort by Purchase Price</button>
+                    <button type="button" class="btn btn-white border shadow-sm btn-block" id="sortPP">Sort by Price <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down mb-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                      </svg></button>
                 </div>
             </div>
             <div class="col col-md-6">
                 <div class="d-grid">
-                    <button type="button" class="btn btn-info btn-block" id="sortRev">Sort by Revenue</button>
+                    <button type="button" class="btn btn-white border shadow-sm btn-block" id="sortRev">Sort by Revenue <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down mb-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                      </svg></button>
                 </div>
             </div>
         </div>
@@ -17,71 +21,104 @@
     <div class="container">
         <div id="sortedPP">
             <% for (let property of properties) {%>
-                <div class="card mb-3">
-                    <div class="row">
-                        <% if(property.images.length !==0) {%>
-                            <div class="col-md-3">
-                                <img src="<%=property.images[0].url%>" class="img-fluid" alt="">
-                            </div>
-                            <% } else { %>
+                <div class="card-group">
+                    <div class="card mb-3">
+                        <div class="row">
+                            <% if(property.images.length !==0) {%>
                                 <div class="col-md-3">
-                                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80"
-                                        class="img-fluid" alt="">
+                                    <img src="<%=property.images[0].url%>" class="img-fluid" alt="">
                                 </div>
-                                <% } %>
-                                    <div class="col-md-9">
-                                        <div class="card-body border-md-start">
-                                            <h5 class="card-title">
-                                                <%=property.title%>
-                                            </h5>
-                                            <p class="card-text">
-                                                <%=property.description%>
-                                            </p>
-                                            <p class="card-text">
-                                                <small class="text-muted">
-                                                    <%= property.location %>
-                                                </small>
-                                            </p>
-                                            <a class="btn btn-primary" href="/properties/<%=property._id%>">View <%=
-                                                    property.title %></a>
-                                        </div>
+                                <% } else { %>
+                                    <div class="col-md-3">
+                                        <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80"
+                                            class="img-fluid" alt="">
                                     </div>
+                                    <% } %>
+                                        <div class="col-md-9">
+                                            <div class="card-body border-md-start">
+                                                <h5 class="card-title">
+                                                    <%=property.title%>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <%=property.description%>
+                                                </p>
+                                                <p class="card-text">
+                                                    <small class="text-muted">
+                                                        <%= property.location %>
+                                                    </small>
+                                                </p>
+                                                <a class="btn btn-primary" href="/properties/<%=property._id%>">View <%=
+                                                        property.title %></a>
+                                            </div>
+                                        </div>
+                        </div>
+                        <div class="container card-footer border-top pt-3 pb-0">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <p>Purchase Price: $<%= property.price %>
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <p>Total Revenue: $<%= property.revenue %>
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <p id="capRate">Cap Rate: <%= property.capRate50 %>%</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <% } %>
         </div>
         <div id="sortedRev" class="is-hidden">
             <% for (let property of sortedRevenue) {%>
-                <div class="card mb-3">
-                    <div class="row">
-                        <% if(property.images.length !==0) {%>
-                            <div class="col-md-3">
-                                <img src="<%=property.images[0].url%>" class="img-fluid" alt="">
-                            </div>
-                            <% } else { %>
+                <div class="card-group">
+                    <div class="card mb-3">
+                        <div class="row">
+                            <% if(property.images.length !==0) {%>
                                 <div class="col-md-3">
-                                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80"
-                                        class="img-fluid" alt="">
+                                    <img src="<%=property.images[0].url%>" class="img-fluid" alt="">
                                 </div>
-                                <% } %>
-
-                                    <div class="col-md-9">
-                                        <div class="card-body border-md-start">
-                                            <h5 class="card-title">
-                                                <%=property.title%>
-                                            </h5>
-                                            <p class="card-text">
-                                                <%=property.description%>
-                                            </p>
-                                            <p class="card-text">
-                                                <small class="text-muted">
-                                                    <%= property.location %>
-                                                </small>
-                                            </p>
-                                            <a class="btn btn-primary" href="/properties/<%=property._id%>">View <%=
-                                                    property.title %></a>
-                                        </div>
+                                <% } else { %>
+                                    <div class="col-md-3">
+                                        <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80"
+                                            class="img-fluid" alt="">
                                     </div>
+                                    <% } %>
+                                        <div class="col-md-9">
+                                            <div class="card-body border-md-start">
+                                                <h5 class="card-title">
+                                                    <%=property.title%>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <%=property.description%>
+                                                </p>
+                                                <p class="card-text">
+                                                    <small class="text-muted">
+                                                        <%= property.location %>
+                                                    </small>
+                                                </p>
+                                                <a class="btn btn-primary" href="/properties/<%=property._id%>">View <%=
+                                                        property.title %></a>
+                                            </div>
+                                        </div>
+                        </div>
+                        <div class="container card-footer border-top pt-3 pb-0">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <p>Purchase Price: $<%= property.price %>
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <p>Total Revenue: $<%= property.revenue %>
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <p id="capRate">Cap Rate: <%= property.capRate50 %>%</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <% } %>

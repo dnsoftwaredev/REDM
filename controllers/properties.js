@@ -6,7 +6,7 @@ const geocoder = mbxGeocoding({accessToken: mapBoxToken})
 
 module.exports.index = async (req, res) => {
     const properties = await Property.find().sort({'price': 1});
-    const sortedRevenue = await Property.find().sort({'revenue': 1})
+    const sortedRevenue = await Property.find().sort({'revenue': 1});
     res.render('properties/index', { properties, sortedRevenue });
 }
 

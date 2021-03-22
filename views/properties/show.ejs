@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
     <div class="row mb-5">
         <div class="col-md-6">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselExampleControls" class="carousel slide" data-interval="false">
                 <div class="carousel-inner">
                     <% property.images.forEach((img, i)=> {%>
                         <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
@@ -64,9 +64,6 @@
                         </div>
                     </div>
                     <% } %>
-                        <div class="card-footer text-muted">
-                            3 days ago
-                        </div>
             </div>
         </div>
 
@@ -75,10 +72,6 @@
             <% if(currentUser) {%>
                 <h4 class="mt-4 mt-md-2">Leave your analysis for this deal:</h4>
                 <form action="/properties/<%=property._id%>/helps" method="POST" class="mb-3 need-validated" novalidate>
-                    <!-- <div class="mb-3">
-                        <label for="rating" class="form-label">Is this a good deal?</label>
-                        <input class="form-range" type="range" min="1" max="5" name="help[rating]" id="rating">
-                    </div> -->
                     <p>How good/bad is this deal?</p>
                     <fieldset class="starability-checkmark mt-n2">
                         <input type="radio" id="no-rate" class="input-no-rate" name="help[rating]" value="0" 
@@ -106,13 +99,17 @@
                         <button class="btn btn-success">Submit</button>
                     </div>
                 </form>
-                <% } %>
+                <% } else {%>
+                <div class="card mt-4 mt-md-2 text-center">
+                    <h3 class="mt-2">Please login to comment</h3>
+                </div>
+                <% } %> 
         </div>
     </div>
     <div class="row mt-n5 mt-md-0">
         <div class="col">
             <% if (property.helps.length) {%> 
-            <h2>Please see comments below:</h2>
+            <h2>Comments:</h2>
             <% } %> 
             <% for (let help of property.helps) {%>
                 <div class="card mb-3">
