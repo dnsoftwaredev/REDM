@@ -24,7 +24,7 @@ module.exports.createProperty = async (req, res) => {
     property.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     property.author = req.user._id;
     await property.save();
-    req.flash('success', 'Successfully made a new Property');
+    req.flash('success', 'Successfully made a new Property!');
     res.redirect(`/properties/${property._id}`)
 }
 
@@ -36,7 +36,7 @@ module.exports.showProperty = async (req, res) => {
         }
     }).populate('author');
     if (!property) {
-        req.flash('error', 'Cannot find that Property');
+        req.flash('error', 'Cannot find that Property!');
         return res.redirect('/properties')
     }
     res.render('properties/show', { property });
@@ -45,7 +45,7 @@ module.exports.showProperty = async (req, res) => {
 module.exports.editForm = async (req, res) => {
     const property = await Property.findById(req.params.id);
     if (!property) {
-        req.flash('error', 'Cannot find that Property');
+        req.flash('error', 'Cannot find that Property!');
         return res.redirect('/properties')
     }
     res.render('properties/edit', { property });
@@ -62,12 +62,12 @@ module.exports.updateProperty = async (req, res) => {
         }
         await property.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
     }
-    req.flash('success', 'Successfully updated the Property');
+    req.flash('success', 'Successfully updated the Property!');
     res.redirect(`/properties/${property._id}`);
 }
 
 module.exports.deleteProperty = async (req, res) => {
     await Property.findByIdAndDelete(req.params.id);
-    req.flash('success', 'Successfully deleted the Property')
+    req.flash('success', 'Successfully deleted the Property!')
     res.redirect('/properties');
 }

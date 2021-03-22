@@ -117,7 +117,7 @@
                         <p class="starability-result" data-rating="<%= help.rating %>"></p>
                         <h6 class="card-subtitle mb-2 text-muted">By <%= help.author.username %>
                         </h6>
-                        <p class="card-text">Comment: <%= help.body %>
+                        <p class="card-text"><%= help.body %>
                         </p>
                         <% if (currentUser && help.author.equals(currentUser._id)) {%>
                             <form action="/properties/<%=property._id%>/helps/<%=help._id%>?_method=DELETE"

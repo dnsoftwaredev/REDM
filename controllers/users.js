@@ -11,7 +11,7 @@ module.exports.register = async (req, res, next) => {
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if (err) return next(err);
-            req.flash('success', 'Welcome to REDM');
+            req.flash('success', 'Welcome to REDM!');
             res.redirect('/properties');
         })
     } catch (e) {
