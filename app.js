@@ -23,6 +23,7 @@ const propertyRoutes = require('./routes/properties');
 const helpRoutes = require('./routes/helps');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/redm';
+// const dbUrl = 'mongodb://localhost:27017/redm';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -92,6 +93,7 @@ const styleSrcUrls = [
     "https://api.tiles.mapbox.com/",
     "https://fonts.googleapis.com/",
     "https://use.fontawesome.com/",
+    "https://kit.fontawesome.com/",
 ];
 const connectSrcUrls = [
     "https://api.mapbox.com/",

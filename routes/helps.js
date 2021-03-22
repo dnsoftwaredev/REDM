@@ -11,5 +11,9 @@ router.post('/', isLoggedIn, validateHelp, catchAsync(helps.createHelp));
 
 router.delete('/:helpId', isLoggedIn, isHelpAuthor, catchAsync(helps.deleteHelp));
 
+router.post('/:helpId/upvote', isLoggedIn, catchAsync(helps.upvoteHelp));
+
+router.post('/:helpId/downvote', isLoggedIn, catchAsync(helps.downvoteHelp));
+
 module.exports = router;
 

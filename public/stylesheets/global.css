@@ -77,3 +77,9 @@ body {
     top: 0;
     visibility: hidden;
 }
+
+.logo {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const city_list = require('./city_list');
 const { descriptors, p_types } = require('./index_helper');
 const Property = require('../models/property');
+const Help = require('../models/help');
 
 mongoose.connect('mongodb://localhost:27017/redm', {
     useNewUrlParser: true,
@@ -20,6 +21,7 @@ const random_selector = array => array[Math.floor(Math.random() * array.length)]
 
 const seedDB = async () => {
     await Property.deleteMany({});
+    await Help.deleteMany({});
     for (let i = 0; i < 300; i++) {
         const rng = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 500000);
